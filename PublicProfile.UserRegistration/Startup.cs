@@ -6,6 +6,7 @@ using PublicProfile.UserRegistration.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using PublicProfile.UserRegistration.Storage;
 
 namespace PublicProfile.UserRegistration
 {
@@ -21,6 +22,7 @@ namespace PublicProfile.UserRegistration
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAzureTablesBasedUserStore(Configuration.GetConnectionString("UserAccountStore"));
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
