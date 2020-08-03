@@ -9,20 +9,22 @@
 
         public StoredUser(IUser<string> other)
         {
-            this.Id = other.Id;
             this.UserName = other.UserName;
         }
 
-        public string Id
+        public string UserName
         {
             get => this.RowKey;
-            set => this.RowKey = value;
+            set 
+            { 
+                this.RowKey = value;
+                this.PartitionKey = value;
+            }
         }
 
-        public string UserName 
-        { 
-            get => this.PartitionKey; 
-            set => this.PartitionKey = value; 
+        public string Id 
+        {
+            get => this.UserName;
         }
     }
 }

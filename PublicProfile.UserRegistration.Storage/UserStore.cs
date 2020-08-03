@@ -3,36 +3,41 @@
     using Microsoft.AspNet.Identity;
     using System.Threading.Tasks;
 
-    public class UserStore<TUser> : IUserStore<TUser> where TUser : class, IUser<string>
+    public class UserStore : IUserStore<User>
     {
-        public Task CreateAsync(TUser user)
+        private readonly IUserDataStorage userDataStorage;
+
+        public UserStore(IUserDataStorage storage)
+        {
+            this.userDataStorage = storage;
+        }
+
+        public async Task CreateAsync(User user)
+        {
+            await this.userDataStorage.Store(user);
+        }
+
+        public Task DeleteAsync(User user)
         {
             throw new System.NotImplementedException();
         }
 
-        public Task DeleteAsync(TUser user)
+        public void Dispose() { }
+
+        public async Task<User> FindByIdAsync(string userId)
         {
-            throw new System.NotImplementedException();
+            var storedUser = await userDataStorage.GetUserById(userId);
+            return new User(storedUser);
         }
 
-        public void Dispose()
+        public async Task<User> FindByNameAsync(string userName)
         {
-            throw new System.NotImplementedException();
+            return await this.FindByIdAsync(userName);
         }
 
-        public Task<TUser> FindByIdAsync(string userId)
+        public async Task UpdateAsync(User user)
         {
-            throw new System.NotImplementedException();
-        }
-
-        public Task<TUser> FindByNameAsync(string userName)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public Task UpdateAsync(TUser user)
-        {
-            throw new System.NotImplementedException();
+            await userDataStorage.Store(user);
         }
     }
 }

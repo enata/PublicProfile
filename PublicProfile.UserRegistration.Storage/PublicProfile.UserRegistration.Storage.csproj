@@ -10,4 +10,8 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1.4" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\PublicProfile.UserRegistration.User\PublicProfile.UserRegistration.User.csproj" />
+  </ItemGroup>
+
 </Project>

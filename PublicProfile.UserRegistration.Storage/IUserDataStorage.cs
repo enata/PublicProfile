@@ -3,8 +3,10 @@ using System.Threading.Tasks;
 
 namespace PublicProfile.UserRegistration.Storage
 {
-    internal interface IUserDataStorage
+    public interface IUserDataStorage
     {
         Task Store(IUser<string> user);
+
+        Task<IUser<string>> GetUserById(string id);
     }
 }

@@ -22,6 +22,14 @@
             await userTable.ExecuteAsync(operation);
         }
 
+        public async Task<IUser<string>> GetUserById(string id)
+        {
+            var userTable = await this.GetUserTable();
+            var operation = TableOperation.Retrieve<StoredUser>(id, id);
+            var result = await userTable.ExecuteAsync(operation);
+            return result.Result as StoredUser;
+        }
+
         private TableOperation PrepareStoreOperationFor(IUser<string> user)
         {
             var userToStore = new StoredUser(user);
