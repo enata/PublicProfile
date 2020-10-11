@@ -8,5 +8,7 @@ namespace PublicProfile.UserRegistration.Storage
         Task Store(IUser<string> user);
 
         Task<IUser<string>> GetUserById(string id);
+
+        Task Delete(string id);
     }
 }

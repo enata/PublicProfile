@@ -17,9 +17,9 @@
             await this.userDataStorage.Store(user);
         }
 
-        public Task DeleteAsync(User user)
+        public async Task DeleteAsync(User user)
         {
-            throw new System.NotImplementedException();
+            await userDataStorage.Delete(user.Id);
         }
 
         public void Dispose() { }

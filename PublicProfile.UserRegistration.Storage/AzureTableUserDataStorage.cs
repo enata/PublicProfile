@@ -30,6 +30,19 @@
             return result.Result as StoredUser;
         }
 
+        public async Task Delete(string userId)
+        {
+            var userTable = await this.GetUserTable();
+            var operation = PrepareDeleteOperationFor(userId);
+            await userTable.ExecuteAsync(operation);
+        }
+
+        private TableOperation PrepareDeleteOperationFor(string userId)
+        {
+            var userToDelete = new StoredUser { UserName = userId };
+            return TableOperation.Delete(userToDelete);
+        }
+
         private TableOperation PrepareStoreOperationFor(IUser<string> user)
         {
             var userToStore = new StoredUser(user);
@@ -48,5 +61,6 @@
             await table.CreateIfNotExistsAsync();
             return table;
         }
+
     }
 }
